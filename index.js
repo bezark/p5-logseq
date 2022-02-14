@@ -60,8 +60,21 @@ function main () {
       return
     }
 
-    const blocks = await logseq.Editor.getCurrentPageBlocksTree()
-    initSketch(displaySketch, btnClose, blocks)
+    let currentPage = await logseq.Editor.getCurrentPage()
+    
+    let backlinkedBlocks = await logseq.DB.datascriptQuery(`[:find (pull ?b [*])
+    :where
+    [?b :block/path-refs [:block/name "`+currentPage.name+`"]]
+    [?page :block/original-name ?name]]
+`)
+    // console.log(backlinkedBlocks)
+    let textHonk = []
+    for (const blocky of backlinkedBlocks) {
+      textHonk.push(blocky[0].content)
+     
+    }
+    // const blocks = await logseq.Editor.getCurrentPageBlocksTree()
+    initSketch(displaySketch, btnClose, textHonk)
   })
 
   // mount to root
