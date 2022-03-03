@@ -35,7 +35,7 @@ let sketch = function(p) {
       if (counts.hasOwnProperty(k)) {
         if (counts[k]/total > 0.0001) {
           p.fill(p.random(255), p.random(255), p.random(255));
-          p.textSize((counts[k]/total) * 25000);
+          p.textSize((counts[k]/total) * 5000);
           p.text(k, p.random(p.width), p.random(p.height));
         }
       }
